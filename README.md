@@ -22,6 +22,10 @@ pnpm dev
 bun dev
 ```
 
+### Env
+Remember to set the variable `SPOTIFY_TOKEN_API` in the file `.env.local`
+
+
 ### Spotify Docs
 
 - [Access Token](https://developer.spotify.com/documentation/web-api/concepts/access-token)
