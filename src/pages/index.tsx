@@ -131,7 +131,7 @@ export default function Home({ albums, query: initialQuery }: Props) {
             ))}
           </div>
         </section>
-        {Boolean(result.length) && (
+        {Boolean(result.length) && albums.next && (
           <button onClick={handleLoadMoreAlbums} className={styles.loadMore}>
             Cargar más albums
           </button>
