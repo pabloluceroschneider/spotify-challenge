@@ -1,5 +1,7 @@
 import { useState, type ChangeEvent, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,6 +20,9 @@ interface Props {
 }
 
 export default function Home({ albums }: Props) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const [result, setResult] = useState<Item[]>(albums.items);
   const [query, setQuery] = useState<{ q: string; year?: number }>({
     q: '',
@@ -43,7 +48,13 @@ export default function Home({ albums }: Props) {
         query.q,
         query.year ? Number(query.year) : undefined
       );
+
       setResult(response.items);
+
+      const params = new URLSearchParams(searchParams);
+      params.set('q', query.q);
+      params.set('year', String(query.year));
+      replace(`${pathname}?${params.toString()}`);
     };
 
     fetchAlbums();
