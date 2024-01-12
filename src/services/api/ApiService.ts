@@ -5,7 +5,7 @@ const apiDomain = {
   prod: '',
 };
 
-const request = axios.create({
+const HttpClient = axios.create({
   baseURL: apiDomain.local,
   timeout: 3000,
 });
@@ -22,7 +22,7 @@ export class ApiService {
 
     try {
       const params = { q, year, type, offset };
-      const { data } = await request.get('/spotify/search', {
+      const { data } = await HttpClient.get('/spotify/search', {
         params,
       });
       return data;
@@ -33,7 +33,7 @@ export class ApiService {
 
   static async fetchAlbumById(id: string) {
     try {
-      const { data } = await request.get(`v1/albums/${id}`);
+      const { data } = await HttpClient.get(`v1/albums/${id}`);
       return data;
     } catch (error) {
       throw error;
