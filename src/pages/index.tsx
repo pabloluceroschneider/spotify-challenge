@@ -53,7 +53,7 @@ export default function Home({ albums }: Props) {
 
       const params = new URLSearchParams(searchParams);
       params.set('q', query.q);
-      params.set('year', String(query.year));
+      query.year && params.set('year', String(query.year));
       replace(`${pathname}?${params.toString()}`);
     };
 

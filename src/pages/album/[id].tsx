@@ -12,7 +12,6 @@ const mmToMMSS = (miliseconds: number) => {
 };
 
 export default function Home({ album }: any) {
-  console.log({ album });
   const { name, images, tracks } = album;
   const [image] = images;
   const { items } = tracks;
