@@ -22,7 +22,9 @@ export class SpotifyService {
   static async fetchAlbums(
     q: string | string[],
     year?: number,
-    type = 'album'
+    type = 'album',
+    offset = 0,
+    limit = 20
   ) {
     if (!q) return;
 
@@ -34,6 +36,8 @@ export class SpotifyService {
       const params = {
         q: query,
         type,
+        limit,
+        offset,
       };
 
       const { data } = await request.get('/v1/search', {

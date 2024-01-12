@@ -14,12 +14,13 @@ export class ApiService {
   static async fetchAlbums(
     q: string | string[],
     year?: number,
-    type = 'album'
+    type = 'album',
+    offset = 0
   ) {
     if (!q) return;
 
     try {
-      const params = { q, year, type };
+      const params = { q, year, type, offset };
       const { data } = await request.get('/spotify/search', {
         params,
       });
