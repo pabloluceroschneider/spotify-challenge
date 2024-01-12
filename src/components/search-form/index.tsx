@@ -1,4 +1,5 @@
-import { useState, FC, ChangeEvent, ChangeEventHandler } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { FC, ChangeEventHandler } from 'react';
 import styles from './styles.module.css';
 
 interface Props {
@@ -6,6 +7,8 @@ interface Props {
 }
 
 export const SearchForm: FC<Props> = ({ onChange }) => {
+  const searchParams = useSearchParams();
+
   return (
     <form className={styles.form}>
       <input
@@ -13,6 +16,7 @@ export const SearchForm: FC<Props> = ({ onChange }) => {
         name="q"
         placeholder="Search Album"
         className={styles.qInput}
+        defaultValue={searchParams.get('q') as string}
         onChange={onChange}
       />
       <input
@@ -20,6 +24,7 @@ export const SearchForm: FC<Props> = ({ onChange }) => {
         name="year"
         placeholder="Year"
         type="number"
+        defaultValue={searchParams.get('year') as string}
         className={styles.yearInput}
         onChange={onChange}
       />
