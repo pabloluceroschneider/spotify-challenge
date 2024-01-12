@@ -12,11 +12,12 @@ const request = axios.create({
 
 export class ApiService {
   static async fetchAlbums(
-    q: string | string[],
+    q: string,
     year?: number,
     type = 'album',
     offset = 0
   ) {
+    console.log({ q, year, type, offset });
     if (!q) return;
 
     try {

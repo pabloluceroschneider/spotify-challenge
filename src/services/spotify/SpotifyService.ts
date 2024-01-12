@@ -24,7 +24,7 @@ export class SpotifyService {
     year?: number,
     type = 'album',
     offset = 0,
-    limit = 20
+    limit = 12
   ) {
     if (!q) return;
 

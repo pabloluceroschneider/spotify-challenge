@@ -15,19 +15,52 @@ import type { Albums, Item } from '@/types/spotify';
 
 import styles from '@/styles/Search.module.css';
 
-interface Props {
-  albums: Albums;
+interface Query {
+  q: string;
+  year: number;
+  offset: number;
+  limit: number;
 }
 
-export default function Home({ albums }: Props) {
+interface Props {
+  albums: Albums;
+  query: Query;
+}
+
+const limit = 12;
+
+export default function Home({ albums, query: initialQuery }: Props) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   const [result, setResult] = useState<Item[]>(albums.items);
-  const [query, setQuery] = useState<{ q: string; year?: number }>({
-    q: '',
-    year: undefined,
+  const [query, setQuery] = useState<Query>({
+    ...initialQuery,
+    offset: 0,
+    limit,
   });
+
+  useEffect(() => {
+    if (!query.q || !query.offset) return;
+
+    const fetchAlbums = async () => {
+      const response = await ApiService.fetchAlbums(
+        query.q,
+        query.year ? Number(query.year) : undefined,
+        'album',
+        query.offset
+      );
+
+      setResult((prevRes) => [...prevRes, ...response.items]);
+
+      const params = new URLSearchParams(searchParams);
+      params.set('q', query.q);
+      query.year && params.set('year', String(query.year));
+      replace(`${pathname}?${params.toString()}`);
+    };
+
+    fetchAlbums();
+  }, [query]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -40,25 +73,11 @@ export default function Home({ albums }: Props) {
     }));
   };
 
-  useEffect(() => {
-    if (!query.q) return;
-
-    const fetchAlbums = async () => {
-      const response = await ApiService.fetchAlbums(
-        query.q,
-        query.year ? Number(query.year) : undefined
-      );
-
-      setResult(response.items);
-
-      const params = new URLSearchParams(searchParams);
-      params.set('q', query.q);
-      query.year && params.set('year', String(query.year));
-      replace(`${pathname}?${params.toString()}`);
-    };
-
-    fetchAlbums();
-  }, [query]);
+  const handleLoadMoreAlbums = async () =>
+    setQuery((prevQ) => ({
+      ...prevQ,
+      offset: prevQ.offset + limit,
+    }));
 
   return (
     <>
@@ -70,8 +89,8 @@ export default function Home({ albums }: Props) {
         <SearchForm onChange={handleChange} />
         <section className={`${styles.search}`}>
           <div className={`${styles.results}`}>
-            {result?.map((album, index) => (
-              <Link key={index} href={`album/${album.id}`}>
+            {result?.map((album) => (
+              <Link key={album.id} href={`album/${album.id}`}>
                 <div className={`${styles.album}`} title={album.name}>
                   <div className={`${styles['album-details']}`}>
                     <h3 className={`${styles['album-name']}`}>{album.name}</h3>
@@ -88,6 +107,11 @@ export default function Home({ albums }: Props) {
             ))}
           </div>
         </section>
+        {result && (
+          <button onClick={handleLoadMoreAlbums} className={styles.loadMore}>
+            Cargar más albums
+          </button>
+        )}
       </main>
     </>
   );
@@ -102,6 +126,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       albums: response?.albums || {},
+      query,
     },
   };
 };

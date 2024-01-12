@@ -52,3 +52,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.loadMore {
+  font-size: 24px;
+  padding: 4px 16px;
+  border: 1px solid #c1c1c1;
+  background-color: white;
+  border-radius: 10px;
+  transition: 0.2s;
+  margin: 4rem 0;
+}
