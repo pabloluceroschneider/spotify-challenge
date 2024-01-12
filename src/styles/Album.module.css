@@ -1,0 +1,64 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 2rem 0;
+}
+
+.detail {
+  display: flex;
+  width: 100%;
+  margin: 2rem 0 0;
+  max-height: 80dvh;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  padding: 8px 0;
+}
+
+.item:nth-child(2n - 1) {
+  background-color: #f2f2f2;
+}
+
+.trackNumber,
+.duration {
+  margin: auto 2rem;
+}
+
+.songDetails {
+  flex: 1;
+}
+
+.songName {
+  font-size: 18px;
+}
+
+.songArtists {
+  font-weight: lighter;
+}
+
+@media (max-width: 800px) {
+  .main {
+    margin: 0;
+  }
+
+  .title {
+    text-align: center;
+    margin: 1rem 0;
+  }
+  .artists {
+    text-align: center;
+    margin: 0 0 1rem;
+  }
+
+  .detail {
+    flex-direction: column;
+    margin: 0;
+  }
+}

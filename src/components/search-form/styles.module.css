@@ -1,0 +1,25 @@
+.form {
+  display: flex;
+  gap: 16px;
+  margin: 48px 0;
+}
+
+.qInput {
+  font-size: 24px;
+  padding: 4px 16px;
+  border: 1px solid #c1c1c1;
+  background-color: white;
+  border-radius: 10px;
+  transition: 0.2s;
+  width: 20em;
+}
+
+.yearInput {
+  font-size: 24px;
+  padding: 4px 16px;
+  border: 1px solid #c1c1c1;
+  background-color: white;
+  width: 5em;
+  border-radius: 10px;
+  transition: 0.2s;
+}
