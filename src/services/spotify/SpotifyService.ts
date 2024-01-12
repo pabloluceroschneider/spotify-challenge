@@ -4,7 +4,7 @@ const spotifyDomains = {
   prod: 'https://api.spotify.com',
 };
 
-const httpClient = axios.create({
+const HttpClient = axios.create({
   baseURL: spotifyDomains.prod,
   timeout: 3000,
   headers: {
@@ -40,7 +40,7 @@ export class SpotifyService {
         offset,
       };
 
-      const { data } = await httpClient.get('/v1/search', {
+      const { data } = await HttpClient.get('/v1/search', {
         params,
       });
 
@@ -52,7 +52,7 @@ export class SpotifyService {
 
   static async fetchAlbumById(id: string) {
     try {
-      const { data } = await httpClient.get(`v1/albums/${id}`);
+      const { data } = await HttpClient.get(`/v1/albums/${id}`);
       return data;
     } catch (error) {
       throw error;
