@@ -1,4 +1,12 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  <h1 align="center">Spotify Challenge</h1>
+  
+  <img height="80" src="https://github.com/pabloluceroschneider/spotify-challenge/assets/43233080/6f074ab6-8073-4f49-9441-d9f45dfe7a19" alt="tech" />
+
+  <h5>This project is a next js challenge integrated with the spotify api</h5>
+
+</div>
+<hr/>
 
 ## Getting Started
 
