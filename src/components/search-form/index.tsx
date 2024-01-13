@@ -12,7 +12,7 @@ export const SearchForm: FC<Props> = ({ onChange }) => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (qRef.current) {
+    if (qRef.current && !qRef.current.value) {
       qRef.current.focus();
     }
   }, [qRef.current]);
