@@ -32,19 +32,18 @@ export interface Albums {
 }
 
 export interface Item {
-  album_type: string;
   artists: Artist[];
   available_markets: string[];
+  disc_number: number;
+  duration_ms: number;
+  explicit: boolean;
   external_urls: Externalurls;
   href: string;
-  track_number: string;
-  duration_ms: number;
   id: string;
-  images: Image[];
+  is_local: boolean;
   name: string;
-  release_date: string;
-  release_date_precision: string;
-  total_tracks: number;
+  preview_url: string;
+  track_number: number;
   type: string;
   uri: string;
 }
