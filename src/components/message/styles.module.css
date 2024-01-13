@@ -1,0 +1,18 @@
+.error {
+  color: var(--text-dark);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+}
+
+.info {
+  background-color: #3f3fff;
+}
+
+.error {
+  background-color: #da3636;
+  color: var(--text-base);
+}
+
+.warning {
+  background-color: #ffa600;
+}
