@@ -37,6 +37,8 @@ export interface Item {
   available_markets: string[];
   external_urls: Externalurls;
   href: string;
+  track_number: string;
+  duration_ms: number;
   id: string;
   images: Image[];
   name: string;

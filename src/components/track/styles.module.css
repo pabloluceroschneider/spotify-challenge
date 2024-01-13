@@ -1,0 +1,29 @@
+.item {
+  display: flex;
+  padding: 8px 0;
+}
+
+.item:nth-child(2n - 1) {
+  background-color: #7777770d;
+}
+
+.item:hover {
+  background-color: #ffffff0d;
+}
+
+.trackNumber,
+.duration {
+  margin: auto 2rem;
+}
+
+.songDetails {
+  flex: 1;
+}
+
+.songName {
+  font-size: 18px;
+}
+
+.songArtists {
+  font-weight: lighter;
+}

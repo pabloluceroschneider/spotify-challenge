@@ -1,15 +1,10 @@
-import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { SpotifyService } from '@/services/spotify/SpotifyService';
 import styles from '@/styles/Album.module.css';
-
-const mmToMMSS = (miliseconds: number) => {
-  const minutes = Math.floor(miliseconds / 60000);
-  const seconds = String(miliseconds % 60000).slice(0, 2);
-  return `${minutes}:${seconds}`;
-};
+import { Track } from '@/components/track';
+import { Item } from '@/types/spotify';
 
 export default function Home({ album }: any) {
   const { name, images, tracks } = album;
@@ -35,19 +30,8 @@ export default function Home({ album }: any) {
             layout="responsive"
           />
           <ul className={styles.list}>
-            {items?.map((song: any) => (
-              <li key={song.id} className={styles.item}>
-                <div className={styles.trackNumber}>{song.track_number}</div>
-                <div className={styles.songDetails}>
-                  <div className={styles.songName}>{song.name}</div>
-                  <div className={styles.songArtists}>
-                    {song.artists.map((artist: any) => artist.name).join(', ')}
-                  </div>
-                </div>
-                <div className={styles.duration}>
-                  {mmToMMSS(song.duration_ms)}
-                </div>
-              </li>
+            {items?.map((song: Item) => (
+              <Track key={song.id} song={song} />
             ))}
           </ul>
         </section>
