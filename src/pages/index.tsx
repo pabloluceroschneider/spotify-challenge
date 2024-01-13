@@ -11,7 +11,7 @@ import { ApiService } from '@/services/api/ApiService';
 
 import { SearchForm } from '@/components/search-form';
 
-import type { Albums, Item } from '@/types/spotify';
+import type { AlbumQueryType, Albums, Item } from '@/types/spotify';
 
 import styles from '@/styles/Search.module.css';
 
@@ -25,6 +25,7 @@ interface Query {
 interface Props {
   albums: Albums;
   query: Query;
+  error?: string;
 }
 
 const limit = 12;
@@ -142,22 +143,29 @@ export default function Home({ albums, query: initialQuery }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
-  const { q = '', year, offset } = query;
 
-  const initialLimit = offset ? Number(offset) * limit : limit;
-
-  const response = await SpotifyService.fetchAlbums(
-    q,
-    Number(year),
-    'album',
-    0,
-    initialLimit
-  );
-
-  return {
-    props: {
-      albums: response?.albums || {},
-      query,
-    },
+  const fetchParams = {
+    q: String(query.q),
+    year: Number(query.number),
+    limit: query.offset ? Number(query.offset) * limit : limit,
+    type: query.type ? (query.type as AlbumQueryType) : undefined,
   };
+
+  try {
+    const response = await SpotifyService.fetchAlbums(fetchParams);
+    return {
+      props: {
+        albums: response?.albums,
+        query,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        query,
+        error:
+          error instanceof Error ? error.message : 'Internal Server Error ',
+      },
+    };
+  }
 };

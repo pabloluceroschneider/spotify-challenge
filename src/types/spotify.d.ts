@@ -1,5 +1,22 @@
 import { AxiosResponse } from 'axios';
 
+export type AlbumQueryType =
+  | 'album'
+  | 'artist'
+  | 'playlist'
+  | 'track'
+  | 'show'
+  | 'episode'
+  | 'audiobook';
+
+export interface FetchAlbumsParams {
+  q: string | string[] | undefined;
+  year?: number;
+  type?: AlbumQueryType;
+  offset?: number;
+  limit?: number;
+}
+
 export type AlbumsResponse = AxiosResponse<{
   albums: Albums;
 }>;
