@@ -8,6 +8,10 @@ export default async function handler(
 ) {
   const { q, year, offset, limit } = req.query;
 
+  if (!q) {
+    return res.json({});
+  }
+
   try {
     const { albums } = await SpotifyService.fetchAlbums({
       q,
