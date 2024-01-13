@@ -21,7 +21,7 @@ https://github.com/pabloluceroschneider/spotify-challenge/assets/43233080/85bd7c
 
 </details>
 
-# Getting Started
+## Getting Started
 
 First, run the development server:
 
