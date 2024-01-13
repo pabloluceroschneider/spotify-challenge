@@ -2,12 +2,11 @@ import axios from 'axios';
 import { FetchAlbumsParams } from '@/types/spotify';
 
 const apiDomain = {
-  local: 'http://localhost:3000/api',
-  prod: '',
+  prod: '/api',
 };
 
 const HttpClient = axios.create({
-  baseURL: apiDomain.local,
+  baseURL: apiDomain.prod,
   timeout: 3000,
 });
 
@@ -15,7 +14,7 @@ export class ApiService {
   static async fetchAlbums({
     q,
     year,
-    limit = 12,
+    limit,
     offset = 0,
     type = 'album',
   }: FetchAlbumsParams) {

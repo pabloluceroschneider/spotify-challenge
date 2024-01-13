@@ -23,7 +23,7 @@ export class SpotifyService {
   static async fetchAlbums({
     q,
     year,
-    limit,
+    limit = 12,
     offset = 0,
     type = 'album',
   }: FetchAlbumsParams) {
@@ -34,7 +34,7 @@ export class SpotifyService {
     try {
       const yearQuery = year ? `year:${year}` : null;
 
-      const queries = [q, yearQuery].join(' ');
+      const queries = [q, yearQuery].join(' '); // q=Duki year:2022
 
       const params = {
         q: queries,
