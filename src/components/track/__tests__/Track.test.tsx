@@ -12,8 +12,8 @@ describe('Track', () => {
   it('renders a song detail', () => {
     render(<Track {...props} />);
 
-    const heading = screen.getByTestId('artists');
+    const artists = screen.getByTestId('artists');
 
-    expect(heading).toBeInTheDocument();
+    expect(artists).toBeInTheDocument();
   });
 });

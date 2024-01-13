@@ -23,20 +23,22 @@ export const SearchForm: FC<Props> = ({ onChange }) => {
         id="q"
         name="q"
         placeholder="Search Album"
-        defaultValue={searchParams.get('q') as string}
+        defaultValue={searchParams?.get('q') as string}
         onChange={onChange}
         className={`${styles.input} ${styles.qInput}`}
         ref={qRef}
         autoFocus
+        data-testid="q-input"
       />
       <input
         id="year"
         name="year"
         placeholder="Year"
         type="number"
-        defaultValue={searchParams.get('year') as string}
+        defaultValue={searchParams?.get('year') as string}
         className={`${styles.input} ${styles.yearInput}`}
         onChange={onChange}
+        data-testid="year-input"
       />
     </form>
   );
