@@ -41,49 +41,49 @@ export default function Home({ albums, query: initialQuery }: Props) {
   });
 
   // Query hook
-  useEffect(() => {
-    if (!query.q) return;
+  // useEffect(() => {
+  //   if (!query.q) return;
 
-    const fetchAlbums = async () => {
-      const response = await ApiService.fetchAlbums(
-        query.q,
-        query.year ? Number(query.year) : undefined,
-        'album',
-        query.offset
-      );
+  //   const fetchAlbums = async () => {
+  //     const response = await ApiService.fetchAlbums(
+  //       query.q,
+  //       query.year ? Number(query.year) : undefined,
+  //       'album',
+  //       query.offset
+  //     );
 
-      setResult(response.items);
+  //     setResult(response.items);
 
-      const params = new URLSearchParams(searchParams);
-      params.set('q', query.q);
-      query.year && params.set('year', String(query.year));
-      replace(`${pathname}?${params.toString()}`);
-    };
+  //     const params = new URLSearchParams(searchParams);
+  //     params.set('q', query.q);
+  //     query.year && params.set('year', String(query.year));
+  //     replace(`${pathname}?${params.toString()}`);
+  //   };
 
-    fetchAlbums();
-  }, [query.q, query.year]);
+  //   fetchAlbums();
+  // }, [query.q, query.year]);
 
   // Pagination Hook
-  useEffect(() => {
-    if (!query.offset) return;
+  // useEffect(() => {
+  //   if (!query.offset) return;
 
-    const fetchAlbums = async () => {
-      const response = await ApiService.fetchAlbums(
-        query.q,
-        query.year ? Number(query.year) : undefined,
-        'album',
-        query.offset
-      );
+  //   const fetchAlbums = async () => {
+  //     const response = await ApiService.fetchAlbums(
+  //       query.q,
+  //       query.year ? Number(query.year) : undefined,
+  //       'album',
+  //       query.offset
+  //     );
 
-      setResult((prevRes) => [...prevRes, ...response.items]);
+  //     setResult((prevRes) => [...prevRes, ...response.items]);
 
-      const params = new URLSearchParams(searchParams);
-      params.set('page', String(query.offset / query.limit + 1));
-      replace(`${pathname}?${params.toString()}`);
-    };
+  //     const params = new URLSearchParams(searchParams);
+  //     params.set('page', String(query.offset / query.limit + 1));
+  //     replace(`${pathname}?${params.toString()}`);
+  //   };
 
-    fetchAlbums();
-  }, [query.offset]);
+  //   fetchAlbums();
+  // }, [query.offset]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -142,13 +142,16 @@ export default function Home({ albums, query: initialQuery }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
-  const { q = '', year, page } = query;
+  const { q = '', year, offset } = query;
+
+  const initialLimit = offset ? Number(offset) * limit : limit;
 
   const response = await SpotifyService.fetchAlbums(
     q,
     Number(year),
     'album',
-    page ? Number(page) * limit : undefined
+    0,
+    initialLimit
   );
 
   return {
