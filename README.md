@@ -9,7 +9,7 @@
 <hr/>
 
 <details>
-  <summary> Screenshots </summary>
+  <summary> Video Demo </summary>
 
   <h6>Desktop</h6>
 
