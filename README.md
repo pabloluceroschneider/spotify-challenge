@@ -8,17 +8,18 @@
 </div>
 <hr/>
 
+## Demo Videos
+
 <details>
-  <summary> Video Demo </summary>
+  <summary> Desktop </summary>
 
-  <h6>Desktop</h6>
+  https://github.com/pabloluceroschneider/spotify-challenge/assets/43233080/0fb099d7-89a3-4717-ab6c-f08184ed3302
+</details>
 
-https://github.com/pabloluceroschneider/spotify-challenge/assets/43233080/0fb099d7-89a3-4717-ab6c-f08184ed3302
-
-<h6>Mobile</h6>
+<details>
+  <summary> Mobile </summary>
 
 https://github.com/pabloluceroschneider/spotify-challenge/assets/43233080/85bd7c66-a5e1-4477-b7a5-00797172058c
-
 </details>
 
 ## Getting Started
