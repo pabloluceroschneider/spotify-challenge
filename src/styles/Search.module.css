@@ -55,11 +55,12 @@
 
 .loadMore {
   font-size: var(--font-size-input);
-  border: 1px solid #c1c1c1;
+  border: 1px solid var(--secondary-color);
   border-radius: 99px;
-  background-color: var(--text-base);
+  background-color: var(--secondary-color);
   color: var(--primary-color);
+  font-weight: 600;
   transition: 0.2s;
   margin: 4rem 0;
-  padding: 8px 16px;
+  padding: 16px 32px;
 }
