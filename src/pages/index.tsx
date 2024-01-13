@@ -33,15 +33,39 @@ export default function Home({ albums, query: initialQuery }: Props) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const [result, setResult] = useState<Item[]>(albums.items);
+  const [result, setResult] = useState<Item[]>(albums.items || []);
   const [query, setQuery] = useState<Query>({
     ...initialQuery,
     offset: 0,
     limit,
   });
 
+  // Query hook
   useEffect(() => {
-    if (!query.q || !query.offset) return;
+    if (!query.q) return;
+
+    const fetchAlbums = async () => {
+      const response = await ApiService.fetchAlbums(
+        query.q,
+        query.year ? Number(query.year) : undefined,
+        'album',
+        query.offset
+      );
+
+      setResult(response.items);
+
+      const params = new URLSearchParams(searchParams);
+      params.set('q', query.q);
+      query.year && params.set('year', String(query.year));
+      replace(`${pathname}?${params.toString()}`);
+    };
+
+    fetchAlbums();
+  }, [query.q, query.year]);
+
+  // Pagination Hook
+  useEffect(() => {
+    if (!query.offset) return;
 
     const fetchAlbums = async () => {
       const response = await ApiService.fetchAlbums(
@@ -54,13 +78,12 @@ export default function Home({ albums, query: initialQuery }: Props) {
       setResult((prevRes) => [...prevRes, ...response.items]);
 
       const params = new URLSearchParams(searchParams);
-      params.set('q', query.q);
-      query.year && params.set('year', String(query.year));
+      params.set('page', String(query.offset / query.limit + 1));
       replace(`${pathname}?${params.toString()}`);
     };
 
     fetchAlbums();
-  }, [query]);
+  }, [query.offset]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -107,7 +130,7 @@ export default function Home({ albums, query: initialQuery }: Props) {
             ))}
           </div>
         </section>
-        {result && (
+        {Boolean(result.length) && albums.next && (
           <button onClick={handleLoadMoreAlbums} className={styles.loadMore}>
             Cargar más albums
           </button>
@@ -119,9 +142,14 @@ export default function Home({ albums, query: initialQuery }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
-  const { q = '', year } = query;
+  const { q = '', year, page } = query;
 
-  const response = await SpotifyService.fetchAlbums(q, Number(year));
+  const response = await SpotifyService.fetchAlbums(
+    q,
+    Number(year),
+    'album',
+    page ? Number(page) * limit : undefined
+  );
 
   return {
     props: {

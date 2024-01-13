@@ -15,7 +15,7 @@ export const SearchForm: FC<Props> = ({ onChange }) => {
         id="q"
         name="q"
         placeholder="Search Album"
-        className={styles.qInput}
+        className={`${styles.input} ${styles.qInput}`}
         defaultValue={searchParams.get('q') as string}
         onChange={onChange}
       />
@@ -25,7 +25,7 @@ export const SearchForm: FC<Props> = ({ onChange }) => {
         placeholder="Year"
         type="number"
         defaultValue={searchParams.get('year') as string}
-        className={styles.yearInput}
+        className={`${styles.input} ${styles.yearInput}`}
         onChange={onChange}
       />
     </form>
