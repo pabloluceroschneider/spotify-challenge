@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prettier": "prettier . --write"
   },
   "dependencies": {
     "axios": "^1.6.5",
@@ -34,7 +35,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "prettier . --write",
+      "pre-commit": "npm run prettier",
       "pre-push": "npm run test"
     }
   }
