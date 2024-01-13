@@ -18,32 +18,38 @@ export const useAlbums = ({ initialData = [], q, year, offset }: Params) => {
     offset,
   });
 
-  console.log({ store });
-
+  /**
+   * Updates albumns on change `q` and `year`
+   */
   useEffect(() => {
     const { q, year, offset } = store;
-    if (!q || !year) return;
+
+    if (!q && !year) return;
+
     const fetchAlbums = async () => {
-      const data = await ApiService.fetchAlbums({
+      const { items } = await ApiService.fetchAlbums({
         q,
         year: Number(year),
-        offset: Number(offset),
+        offset: offset ? Number(offset) : undefined,
       });
 
       dispatch({
         type: ReducerActionKind.SET_DATA,
-        payload: { data },
+        payload: { data: items },
       });
     };
 
     fetchAlbums();
   }, [store.q, store.year]);
 
+  /**
+   * Updates albumns on change `offset`
+   */
   useEffect(() => {
     const { q, year, offset } = store;
     if (!offset) return;
     const fetchAlbums = async () => {
-      const data = await ApiService.fetchAlbums({
+      const { items } = await ApiService.fetchAlbums({
         q,
         year: Number(year),
         offset: Number(offset),
@@ -51,7 +57,7 @@ export const useAlbums = ({ initialData = [], q, year, offset }: Params) => {
 
       dispatch({
         type: ReducerActionKind.ADD_DATA,
-        payload: { data },
+        payload: { data: items },
       });
     };
 
