@@ -44,7 +44,7 @@ export default function Home({ albums, query, error }: Props) {
         <SearchForm onChange={handleInput} />
         <section className={`${styles.search}`}>
           <div className={`${styles.results}`}>
-            {data?.map((album: any) => (
+            {data?.items.map((album: any) => (
               <Link key={album.id} href={`album/${album.id}`}>
                 <div className={`${styles.album}`} title={album.name}>
                   <div className={`${styles['album-details']}`}>
@@ -62,7 +62,7 @@ export default function Home({ albums, query, error }: Props) {
             ))}
           </div>
         </section>
-        {Boolean(data?.length) && albums?.next && (
+        {Boolean(data?.items.length) && data?.next && (
           <button onClick={handleOffset} className={styles.loadMore}>
             Cargar más albums
           </button>

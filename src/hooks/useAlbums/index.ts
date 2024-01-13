@@ -2,6 +2,7 @@ import { type ChangeEvent, useEffect, useReducer } from 'react';
 import { ApiService } from '@/services/api/ApiService';
 import { albumsReducer } from './reducer';
 import { ReducerActionKind } from './types';
+import { debounce } from '../../utils/debounce';
 
 interface Params {
   initialData: any;
@@ -27,7 +28,7 @@ export const useAlbums = ({ initialData = [], q, year, offset }: Params) => {
     if (!q && !year) return;
 
     const fetchAlbums = async () => {
-      const { items } = await ApiService.fetchAlbums({
+      const data = await ApiService.fetchAlbums({
         q,
         year: Number(year),
         offset: offset ? Number(offset) : undefined,
@@ -35,7 +36,7 @@ export const useAlbums = ({ initialData = [], q, year, offset }: Params) => {
 
       dispatch({
         type: ReducerActionKind.SET_DATA,
-        payload: { data: items },
+        payload: { data },
       });
     };
 
@@ -49,7 +50,7 @@ export const useAlbums = ({ initialData = [], q, year, offset }: Params) => {
     const { q, year, offset } = store;
     if (!offset) return;
     const fetchAlbums = async () => {
-      const { items } = await ApiService.fetchAlbums({
+      const data = await ApiService.fetchAlbums({
         q,
         year: Number(year),
         offset: Number(offset),
@@ -57,25 +58,25 @@ export const useAlbums = ({ initialData = [], q, year, offset }: Params) => {
 
       dispatch({
         type: ReducerActionKind.ADD_DATA,
-        payload: { data: items },
+        payload: { data },
       });
     };
 
     fetchAlbums();
   }, [store.offset]);
 
-  function handleInput(event: ChangeEvent<HTMLInputElement>): void {
+  const handleInput = debounce((event: ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
     const { name, value } = event.target;
     return dispatch({
       type: ReducerActionKind.SET_INPUT,
       payload: { name, value },
     });
-  }
+  });
 
-  function handleOffset(): void {
+  const handleOffset = debounce((): void => {
     return dispatch({ type: ReducerActionKind.SET_OFFSET, payload: {} });
-  }
+  });
 
   return { ...store, handleInput, handleOffset };
 };
