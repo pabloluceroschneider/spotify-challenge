@@ -1,7 +1,5 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
 
 import { SpotifyService } from '@/services/spotify/SpotifyService';
 
@@ -11,6 +9,7 @@ import { useAlbums } from '@/hooks/useAlbums';
 import type { AlbumQueryType, Albums } from '@/types/spotify';
 
 import styles from '@/styles/Search.module.css';
+import { AlbumList } from '@/components/album-list';
 
 interface Query {
   q: string;
@@ -20,18 +19,13 @@ interface Query {
 interface Props {
   albums: Albums;
   query: Query;
-  error?: string;
 }
 
-export default function Home({ albums, query, error }: Props) {
+export default function Home({ albums, query }: Props) {
   const { data, handleInput, handleOffset } = useAlbums({
     initialData: albums,
     ...query,
   });
-
-  if (error) {
-    return <p>Error</p>;
-  }
 
   return (
     <>
@@ -41,32 +35,12 @@ export default function Home({ albums, query, error }: Props) {
       <main className={`${styles.main}`}>
         <h1 className={`${styles.title}`}>Filadd Music</h1>
         <SearchForm onChange={handleInput} />
-        <section className={`${styles.search}`}>
-          <div className={`${styles.results}`}>
-            {data?.items?.map((album: any) => (
-              <Link key={album.id} href={`album/${album.id}`}>
-                <div className={`${styles.album}`} title={album.name}>
-                  <div className={`${styles['album-details']}`}>
-                    <h3 className={`${styles['album-name']}`}>{album.name}</h3>
-                    <p>{album.artists[0].name}</p>
-                  </div>
-                  <Image
-                    className={`${styles['album-img']}`}
-                    src={album.images[0].url}
-                    alt={album.name}
-                    fill
-                  />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+        <AlbumList data={data} />
         {Boolean(data?.items?.length) && data?.next && (
           <button onClick={handleOffset} className={styles.loadMore}>
             Cargar más albums
           </button>
         )}
-        {error && <div>{error}</div>}
       </main>
     </>
   );
@@ -94,8 +68,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       props: {
         query,
-        error:
-          error instanceof Error ? error.message : 'Internal Server Error ',
       },
     };
   }
