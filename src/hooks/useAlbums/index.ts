@@ -2,7 +2,7 @@ import { type ChangeEvent, useReducer } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { ApiService } from '@/services/api/ApiService';
-import { Albums } from '@/types/spotify';
+import { Albums } from '@/types/search';
 
 import { debounce } from '../../utils/debounce';
 import { albumsReducer } from './reducer';

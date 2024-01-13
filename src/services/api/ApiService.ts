@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FetchAlbumsParams } from '@/types/spotify';
+import { FetchAlbumsParams } from '@/types';
 
 const HttpClient = axios.create({
   baseURL: '/api',
