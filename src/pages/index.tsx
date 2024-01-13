@@ -14,9 +14,7 @@ import styles from '@/styles/Search.module.css';
 
 interface Query {
   q: string;
-  year: string;
-  offset: string;
-  limit?: string;
+  year: number;
 }
 
 interface Props {
@@ -33,6 +31,10 @@ export default function Home({ albums, query, error }: Props) {
     ...query,
   });
 
+  if (error) {
+    return <p>Error</p>;
+  }
+
   return (
     <>
       <Head>
@@ -43,7 +45,7 @@ export default function Home({ albums, query, error }: Props) {
         <SearchForm onChange={handleInput} />
         <section className={`${styles.search}`}>
           <div className={`${styles.results}`}>
-            {data?.items.map((album: any) => (
+            {data?.items?.map((album: any) => (
               <Link key={album.id} href={`album/${album.id}`}>
                 <div className={`${styles.album}`} title={album.name}>
                   <div className={`${styles['album-details']}`}>
@@ -61,7 +63,7 @@ export default function Home({ albums, query, error }: Props) {
             ))}
           </div>
         </section>
-        {Boolean(data?.items.length) && data?.next && (
+        {Boolean(data?.items?.length) && data?.next && (
           <button onClick={handleOffset} className={styles.loadMore}>
             Cargar más albums
           </button>

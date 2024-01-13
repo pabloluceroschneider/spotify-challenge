@@ -3,20 +3,19 @@ import { ApiService } from '@/services/api/ApiService';
 import { albumsReducer } from './reducer';
 import { ReducerActionKind } from './types';
 import { debounce } from '../../utils/debounce';
+import { Albums } from '@/types/spotify';
 
 interface Params {
-  initialData: any;
+  initialData: Albums;
   q: string;
-  year: string;
-  offset: string;
+  year: number;
 }
 
-export const useAlbums = ({ initialData = [], q, year, offset }: Params) => {
+export const useAlbums = ({ initialData, q, year }: Params) => {
   const [store, dispatch] = useReducer(albumsReducer, {
-    ...initialData,
+    data: initialData,
     q,
     year,
-    offset,
   });
 
   const handleInput = debounce(async (event: ChangeEvent<HTMLInputElement>) => {
