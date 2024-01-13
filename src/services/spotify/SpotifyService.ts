@@ -21,19 +21,23 @@ export class SpotifyService {
    *     - header 'Authorization: Bearer ${process.env.SPOTIFY_TOKEN_API} '
    */
   static async fetchAlbums({
-    q = '',
+    q,
     year,
     limit,
     offset = 0,
     type = 'album',
   }: FetchAlbumsParams) {
+    if (!q) {
+      return null;
+    }
+
     try {
       const yearQuery = year ? `year:${year}` : null;
 
-      const query = [q, yearQuery].join(' ');
+      const queries = [q, yearQuery].join(' ');
 
       const params = {
-        q: query,
+        q: queries,
         type,
         limit,
         offset,

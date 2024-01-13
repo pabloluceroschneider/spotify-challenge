@@ -1,18 +1,17 @@
-import { SpotifyService } from '@/services/spotify/SpotifyService';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { SpotifyService } from '@/services/spotify/SpotifyService';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { q = '', year, offset } = req.query;
+  const { q, year, offset } = req.query;
 
-  const { albums } = await SpotifyService.fetchAlbums(
+  const { albums } = await SpotifyService.fetchAlbums({
     q,
-    Number(year),
-    'album',
-    Number(offset)
-  );
+    year: Number(year),
+    offset: Number(offset),
+  });
 
   res.status(200).json(albums);
 }

@@ -12,7 +12,7 @@ export type AlbumQueryType =
 export interface FetchAlbumsParams {
   q: string | string[] | undefined;
   year?: number;
-  type?: AlbumQueryType;
+  type?: `${AlbumQueryType}`;
   offset?: number;
   limit?: number;
 }
