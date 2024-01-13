@@ -1,10 +1,12 @@
-import { type ChangeEvent, useEffect, useReducer } from 'react';
+import { type ChangeEvent, useReducer } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
 import { ApiService } from '@/services/api/ApiService';
+import { Albums } from '@/types/spotify';
+
+import { debounce } from '../../utils/debounce';
 import { albumsReducer } from './reducer';
 import { ReducerActionKind } from './types';
-import { debounce } from '../../utils/debounce';
-import { Albums } from '@/types/spotify';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface Params {
   initialData: Albums;

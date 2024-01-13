@@ -1,10 +1,11 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+
 import { SpotifyService } from '@/services/spotify/SpotifyService';
-import styles from '@/styles/Album.module.css';
 import { Track } from '@/components/track';
 import { Item } from '@/types/spotify';
+import styles from '@/styles/Album.module.css';
 
 export default function Home({ album }: any) {
   const { name, images, tracks } = album;

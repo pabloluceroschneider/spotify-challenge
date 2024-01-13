@@ -2,14 +2,12 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
 import { SpotifyService } from '@/services/spotify/SpotifyService';
-
 import { SearchForm } from '@/components/search-form';
+import { AlbumList } from '@/components/album-list';
 import { useAlbums } from '@/hooks/useAlbums';
-
 import type { AlbumQueryType, Albums } from '@/types/spotify';
 
 import styles from '@/styles/Search.module.css';
-import { AlbumList } from '@/components/album-list';
 
 interface Query {
   q: string;

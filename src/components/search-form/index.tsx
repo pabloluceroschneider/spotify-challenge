@@ -1,5 +1,6 @@
-import { useSearchParams } from 'next/navigation';
 import { FC, ChangeEventHandler, useRef, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+
 import styles from './styles.module.css';
 
 interface Props {

@@ -13,6 +13,6 @@ export interface ReducerState {
 }
 
 export interface ReducerAction {
-  type: `${ReducerActionKind}`;
+  type: ReducerActionKind;
   payload: Record<string, any>;
 }
