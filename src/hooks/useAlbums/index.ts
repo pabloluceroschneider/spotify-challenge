@@ -12,9 +12,10 @@ interface Params {
   initialData: Albums;
   q: string;
   year: number;
+  onError: (error: string | null) => void;
 }
 
-export const useAlbums = ({ initialData, q, year }: Params) => {
+export const useAlbums = ({ initialData, q, year, onError }: Params) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -51,8 +52,10 @@ export const useAlbums = ({ initialData, q, year }: Params) => {
         payload: { data: response, ...fetchParams },
       });
 
+      onError(null);
       setURLParams(name, value);
-    } catch (error) {
+    } catch (error: any) {
+      onError(error.message);
       dispatch({
         type: ReducerActionKind.CLEAN_DATA,
         payload: {},
@@ -81,7 +84,9 @@ export const useAlbums = ({ initialData, q, year }: Params) => {
           data: response,
         },
       });
-    } catch (error) {
+      onError(null);
+    } catch (error: any) {
+      onError(error.message);
       dispatch({
         type: ReducerActionKind.CLEAN_DATA,
         payload: {},

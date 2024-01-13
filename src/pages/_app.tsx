@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { Message } from '@/components/message';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -24,7 +25,10 @@ export default function App({ Component, pageProps }: AppProps) {
           href="https://open.spotifycdn.com/cdn/images/favicon.0f31d2ea.ico"
         ></link>
       </Head>
-      <Component {...pageProps} />
+      {pageProps.error && (
+        <Message type="error" message={pageProps.error.message} />
+      )}
+      {!pageProps.error && <Component {...pageProps} />}
     </>
   );
 }
