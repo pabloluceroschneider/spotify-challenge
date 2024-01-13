@@ -33,11 +33,5 @@
     "prettier": "3.2.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run prettier",
-      "pre-push": "npm run test"
-    }
   }
 }
