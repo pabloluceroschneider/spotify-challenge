@@ -31,9 +31,7 @@ export default function Home({ album }: any) {
             layout="responsive"
           />
           <ul className={styles.list}>
-            {items?.map((song: Item) => (
-              <Track key={song.id} song={song} />
-            ))}
+            {items?.map((song: Item) => <Track key={song.id} song={song} />)}
           </ul>
         </section>
       </main>

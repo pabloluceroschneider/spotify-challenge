@@ -36,8 +36,8 @@ bun dev
 ```
 
 ### Env
-Remember to set the variable `SPOTIFY_TOKEN_API` in the file `.env.local`
 
+Remember to set the variable `SPOTIFY_TOKEN_API` in the file `.env.local`
 
 ### Spotify Docs
 

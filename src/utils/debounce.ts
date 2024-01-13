@@ -1,6 +1,6 @@
 export const debounce = <F extends (...args: any) => any>(
   callback: Function,
-  waitFor = 300
+  waitFor = 300,
 ) => {
   let timeout: number = 0;
 
