@@ -1,26 +1,25 @@
 import axios from 'axios';
+import { FetchAlbumsParams } from '@/types/spotify';
 
 const apiDomain = {
-  local: 'http://localhost:3000/api',
-  prod: '',
+  prod: '/api',
 };
 
 const HttpClient = axios.create({
-  baseURL: apiDomain.local,
+  baseURL: apiDomain.prod,
   timeout: 3000,
 });
 
 export class ApiService {
-  static async fetchAlbums(
-    q: string,
-    year?: number,
+  static async fetchAlbums({
+    q,
+    year,
+    limit,
+    offset = 0,
     type = 'album',
-    offset = 0
-  ) {
-    if (!q) return;
-
+  }: FetchAlbumsParams) {
     try {
-      const params = { q, year, type, offset };
+      const params = { q, year, type, offset, limit };
       const { data } = await HttpClient.get('/spotify/search', {
         params,
       });
@@ -32,7 +31,7 @@ export class ApiService {
 
   static async fetchAlbumById(id: string) {
     try {
-      const { data } = await HttpClient.get(`v1/albums/${id}`);
+      const { data } = await HttpClient.get(`/v1/albums/${id}`);
       return data;
     } catch (error) {
       throw error;

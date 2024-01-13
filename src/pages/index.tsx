@@ -1,106 +1,37 @@
-import { useState, type ChangeEvent, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { SpotifyService } from '@/services/spotify/SpotifyService';
-import { ApiService } from '@/services/api/ApiService';
 
 import { SearchForm } from '@/components/search-form';
+import { useAlbums } from '@/hooks/useAlbums';
 
-import type { Albums, Item } from '@/types/spotify';
+import type { AlbumQueryType, Albums } from '@/types/spotify';
 
 import styles from '@/styles/Search.module.css';
 
 interface Query {
   q: string;
   year: number;
-  offset: number;
-  limit: number;
 }
 
 interface Props {
   albums: Albums;
   query: Query;
+  error?: string;
 }
 
-const limit = 12;
-
-export default function Home({ albums, query: initialQuery }: Props) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
-  const [result, setResult] = useState<Item[]>(albums.items || []);
-  const [query, setQuery] = useState<Query>({
-    ...initialQuery,
-    offset: 0,
-    limit,
+export default function Home({ albums, query, error }: Props) {
+  const { data, handleInput, handleOffset } = useAlbums({
+    initialData: albums,
+    ...query,
   });
 
-  // Query hook
-  useEffect(() => {
-    if (!query.q) return;
-
-    const fetchAlbums = async () => {
-      const response = await ApiService.fetchAlbums(
-        query.q,
-        query.year ? Number(query.year) : undefined,
-        'album',
-        query.offset
-      );
-
-      setResult(response.items);
-
-      const params = new URLSearchParams(searchParams);
-      params.set('q', query.q);
-      query.year && params.set('year', String(query.year));
-      replace(`${pathname}?${params.toString()}`);
-    };
-
-    fetchAlbums();
-  }, [query.q, query.year]);
-
-  // Pagination Hook
-  useEffect(() => {
-    if (!query.offset) return;
-
-    const fetchAlbums = async () => {
-      const response = await ApiService.fetchAlbums(
-        query.q,
-        query.year ? Number(query.year) : undefined,
-        'album',
-        query.offset
-      );
-
-      setResult((prevRes) => [...prevRes, ...response.items]);
-
-      const params = new URLSearchParams(searchParams);
-      params.set('page', String(query.offset / query.limit + 1));
-      replace(`${pathname}?${params.toString()}`);
-    };
-
-    fetchAlbums();
-  }, [query.offset]);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
-    const { name, value } = event.target;
-
-    setQuery((prevQ) => ({
-      ...prevQ,
-      [name]: value,
-    }));
-  };
-
-  const handleLoadMoreAlbums = async () =>
-    setQuery((prevQ) => ({
-      ...prevQ,
-      offset: prevQ.offset + limit,
-    }));
+  if (error) {
+    return <p>Error</p>;
+  }
 
   return (
     <>
@@ -109,10 +40,10 @@ export default function Home({ albums, query: initialQuery }: Props) {
       </Head>
       <main className={`${styles.main}`}>
         <h1 className={`${styles.title}`}>Filadd Music</h1>
-        <SearchForm onChange={handleChange} />
+        <SearchForm onChange={handleInput} />
         <section className={`${styles.search}`}>
           <div className={`${styles.results}`}>
-            {result?.map((album) => (
+            {data?.items?.map((album: any) => (
               <Link key={album.id} href={`album/${album.id}`}>
                 <div className={`${styles.album}`} title={album.name}>
                   <div className={`${styles['album-details']}`}>
@@ -130,11 +61,12 @@ export default function Home({ albums, query: initialQuery }: Props) {
             ))}
           </div>
         </section>
-        {Boolean(result.length) && albums.next && (
-          <button onClick={handleLoadMoreAlbums} className={styles.loadMore}>
+        {Boolean(data?.items?.length) && data?.next && (
+          <button onClick={handleOffset} className={styles.loadMore}>
             Cargar más albums
           </button>
         )}
+        {error && <div>{error}</div>}
       </main>
     </>
   );
@@ -142,19 +74,29 @@ export default function Home({ albums, query: initialQuery }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
-  const { q = '', year, page } = query;
 
-  const response = await SpotifyService.fetchAlbums(
-    q,
-    Number(year),
-    'album',
-    page ? Number(page) * limit : undefined
-  );
-
-  return {
-    props: {
-      albums: response?.albums || {},
-      query,
-    },
+  const fetchParams = {
+    q: query.q && String(query.q),
+    year: Number(query.number),
+    type: query.type ? (query.type as AlbumQueryType) : undefined,
+    limit: Number(query.limit) < 50 ? Number(query.limit) : 50,
   };
+
+  try {
+    const response = await SpotifyService.fetchAlbums(fetchParams);
+    return {
+      props: {
+        albums: response?.albums || {},
+        query,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        query,
+        error:
+          error instanceof Error ? error.message : 'Internal Server Error ',
+      },
+    };
+  }
 };

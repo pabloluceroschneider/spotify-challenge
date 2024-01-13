@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { FetchAlbumsParams } from '@/types/spotify';
 
 const spotifyDomains = {
   prod: 'https://api.spotify.com',
@@ -19,22 +20,24 @@ export class SpotifyService {
    * GET https://api.spotify.com/v1/search?q={q}%20year%3A{year}&type=album
    *     - header 'Authorization: Bearer ${process.env.SPOTIFY_TOKEN_API} '
    */
-  static async fetchAlbums(
-    q: string | string[],
-    year?: number,
-    type = 'album',
+  static async fetchAlbums({
+    q,
+    year,
+    limit = 12,
     offset = 0,
-    limit = 12
-  ) {
-    if (!q) return;
+    type = 'album',
+  }: FetchAlbumsParams) {
+    if (!q) {
+      return null;
+    }
 
     try {
       const yearQuery = year ? `year:${year}` : null;
 
-      const query = [q, yearQuery].join(' ');
+      const queries = [q, yearQuery].join(' '); // q=Duki year:2022
 
       const params = {
-        q: query,
+        q: queries,
         type,
         limit,
         offset,
