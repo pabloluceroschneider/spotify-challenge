@@ -13,7 +13,7 @@ export default async function handler(
       q,
       year: Number(year),
       offset: Number(offset),
-      limit: Number(limit),
+      limit: limit ? Number(limit) : undefined,
     });
 
     res.status(200).json(albums);
@@ -23,7 +23,7 @@ export default async function handler(
     if (error instanceof AxiosError) {
       const status = error.response?.status || 500;
       const data = error.response?.data || defaultError;
-      return res.status(status).json(data.message);
+      return res.status(status).json(data);
     }
 
     return res.status(500).json(defaultError);

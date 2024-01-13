@@ -1,12 +1,8 @@
 import axios from 'axios';
 import { FetchAlbumsParams } from '@/types/spotify';
 
-const apiDomain = {
-  prod: '/api',
-};
-
 const HttpClient = axios.create({
-  baseURL: apiDomain.prod,
+  baseURL: '/api',
   timeout: 3000,
 });
 

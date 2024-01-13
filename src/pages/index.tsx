@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     q: query.q && String(query.q),
     year: Number(query.number),
     type: query.type ? (query.type as AlbumQueryType) : undefined,
-    limit: Number(query.limit) < 50 ? Number(query.limit) : 50,
+    limit: query.limit ? Number(query.limit) : undefined,
   };
 
   try {
