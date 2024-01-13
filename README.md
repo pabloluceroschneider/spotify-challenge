@@ -1,5 +1,3 @@
-test husky
-
 <div align="center">
   <h1 align="center">Spotify Challenge</h1>
   
