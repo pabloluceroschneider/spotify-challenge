@@ -19,63 +19,37 @@ export const useAlbums = ({ initialData = [], q, year, offset }: Params) => {
     offset,
   });
 
-  /**
-   * Updates albumns on change `q` and `year`
-   */
-  useEffect(() => {
-    const { q, year, offset } = store;
-
-    if (!q && !year) return;
-
-    const fetchAlbums = async () => {
-      const data = await ApiService.fetchAlbums({
-        q,
-        year: Number(year),
-        offset: offset ? Number(offset) : undefined,
-      });
-
-      dispatch({
-        type: ReducerActionKind.SET_DATA,
-        payload: { data },
-      });
-    };
-
-    fetchAlbums();
-  }, [store.q, store.year]);
-
-  /**
-   * Updates albumns on change `offset`
-   */
-  useEffect(() => {
-    const { q, year, offset } = store;
-    if (!offset) return;
-    const fetchAlbums = async () => {
-      const data = await ApiService.fetchAlbums({
-        q,
-        year: Number(year),
-        offset: Number(offset),
-      });
-
-      dispatch({
-        type: ReducerActionKind.ADD_DATA,
-        payload: { data },
-      });
-    };
-
-    fetchAlbums();
-  }, [store.offset]);
-
-  const handleInput = debounce((event: ChangeEvent<HTMLInputElement>): void => {
+  const handleInput = debounce(async (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
+
     const { name, value } = event.target;
+    const { q, year } = store;
+
+    const fetchParams = { q, year, [name]: value };
+
+    const response = await ApiService.fetchAlbums(fetchParams);
+
     return dispatch({
-      type: ReducerActionKind.SET_INPUT,
-      payload: { name, value },
+      type: ReducerActionKind.SET_DATA,
+      payload: { data: response, ...fetchParams },
     });
   });
 
-  const handleOffset = debounce((): void => {
-    return dispatch({ type: ReducerActionKind.SET_OFFSET, payload: {} });
+  const handleOffset = debounce(async () => {
+    const { q, year, data } = store;
+
+    const response = await ApiService.fetchAlbums({
+      q,
+      year,
+      offset: data.offset + data.limit,
+    });
+
+    return dispatch({
+      type: ReducerActionKind.ADD_DATA,
+      payload: {
+        data: response,
+      },
+    });
   });
 
   return { ...store, handleInput, handleOffset };

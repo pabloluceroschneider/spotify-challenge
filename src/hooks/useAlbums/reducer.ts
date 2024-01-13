@@ -5,26 +5,21 @@ export function albumsReducer(state: ReducerState, action: ReducerAction) {
 
   const actions: Record<
     ReducerActionKind,
-    (payload: Record<string, string>) => ReducerState
+    (payload: Record<string, any>) => ReducerState
   > = {
-    [ReducerActionKind.SET_DATA]: ({ data }) => ({
+    [ReducerActionKind.SET_DATA]: ({ data, q, year }) => ({
       ...state,
       data,
+      q,
+      year,
     }),
 
     [ReducerActionKind.ADD_DATA]: ({ data }) => ({
       ...state,
-      data: state.data.push(data),
-    }),
-
-    [ReducerActionKind.SET_INPUT]: ({ name, value }) => ({
-      ...state,
-      [name]: value,
-    }),
-
-    [ReducerActionKind.SET_OFFSET]: () => ({
-      ...state,
-      offset: state.offset + 1,
+      data: {
+        ...data,
+        items: [...state.data.items, ...data.items],
+      },
     }),
   };
 

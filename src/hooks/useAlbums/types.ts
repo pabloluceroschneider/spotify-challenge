@@ -1,15 +1,14 @@
+import { Albums } from '@/types/spotify';
+
 export enum ReducerActionKind {
   SET_DATA = 'SET_DATA',
   ADD_DATA = 'ADD_DATA',
-  SET_INPUT = 'SET_INPUT',
-  SET_OFFSET = 'SET_OFFSET',
 }
 
 export interface ReducerState {
-  data: any;
+  data: Albums;
   q: string;
-  year: string;
-  offset: string;
+  year: number;
 }
 
 export interface ReducerAction {
