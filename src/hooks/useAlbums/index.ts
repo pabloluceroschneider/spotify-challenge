@@ -4,6 +4,7 @@ import { albumsReducer } from './reducer';
 import { ReducerActionKind } from './types';
 import { debounce } from '../../utils/debounce';
 import { Albums } from '@/types/spotify';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface Params {
   initialData: Albums;
@@ -12,11 +13,21 @@ interface Params {
 }
 
 export const useAlbums = ({ initialData, q, year }: Params) => {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
   const [store, dispatch] = useReducer(albumsReducer, {
     data: initialData,
     q,
     year,
   });
+
+  const setURLParams = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set(key, value);
+    replace(`${pathname}?${params.toString()}`);
+  };
 
   const handleInput = debounce(async (event: ChangeEvent<HTMLInputElement>) => {
     try {
@@ -33,10 +44,12 @@ export const useAlbums = ({ initialData, q, year }: Params) => {
 
       const response = await ApiService.fetchAlbums(fetchParams);
 
-      return dispatch({
+      dispatch({
         type: ReducerActionKind.SET_DATA,
         payload: { data: response, ...fetchParams },
       });
+
+      setURLParams(name, value);
     } catch (error) {
       dispatch({
         type: ReducerActionKind.CLEAN_DATA,
@@ -60,12 +73,14 @@ export const useAlbums = ({ initialData, q, year }: Params) => {
         limit,
       });
 
-      return dispatch({
+      dispatch({
         type: ReducerActionKind.ADD_DATA,
         payload: {
           data: response,
         },
       });
+
+      setURLParams('limit', String(response.offset + response.limit));
     } catch (error) {
       dispatch({
         type: ReducerActionKind.CLEAN_DATA,
