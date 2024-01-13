@@ -17,7 +17,6 @@ export class ApiService {
     type = 'album',
     offset = 0
   ) {
-    console.log({ q, year, type, offset });
     if (!q) return;
 
     try {

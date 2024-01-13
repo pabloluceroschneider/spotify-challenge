@@ -78,8 +78,7 @@ export default function Home({ albums, query: initialQuery }: Props) {
       setResult((prevRes) => [...prevRes, ...response.items]);
 
       const params = new URLSearchParams(searchParams);
-      params.set('q', query.q);
-      query.year && params.set('year', String(query.year));
+      params.set('page', String(query.offset / query.limit + 1));
       replace(`${pathname}?${params.toString()}`);
     };
 
@@ -143,9 +142,14 @@ export default function Home({ albums, query: initialQuery }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
-  const { q = '', year } = query;
+  const { q = '', year, page } = query;
 
-  const response = await SpotifyService.fetchAlbums(q, Number(year));
+  const response = await SpotifyService.fetchAlbums(
+    q,
+    Number(year),
+    'album',
+    page ? Number(page) * limit : undefined
+  );
 
   return {
     props: {
