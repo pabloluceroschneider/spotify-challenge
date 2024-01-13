@@ -1,4 +1,4 @@
-import type { Props } from '..';
+import type { Props } from '.';
 
 export const data: Props = {
   song: {
