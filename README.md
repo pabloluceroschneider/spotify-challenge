@@ -1,3 +1,5 @@
+test husky
+
 <div align="center">
   <h1 align="center">Spotify Challenge</h1>
   
@@ -36,8 +38,8 @@ bun dev
 ```
 
 ### Env
-Remember to set the variable `SPOTIFY_TOKEN_API` in the file `.env.local`
 
+Remember to set the variable `SPOTIFY_TOKEN_API` in the file `.env.local`
 
 ### Spotify Docs
 
