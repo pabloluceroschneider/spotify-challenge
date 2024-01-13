@@ -23,8 +23,6 @@ interface Props {
   error?: string;
 }
 
-const limit = 12;
-
 export default function Home({ albums, query, error }: Props) {
   const { data, handleInput, handleOffset } = useAlbums({
     initialData: albums,
@@ -80,7 +78,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const fetchParams = {
     q: query.q && String(query.q),
     year: Number(query.number),
-    limit: query.offset ? Number(query.offset) * limit : limit,
     type: query.type ? (query.type as AlbumQueryType) : undefined,
   };
 
