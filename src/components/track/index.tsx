@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { milisecondsToMinutes } from '@/utils/milisecondsToMinutes';
 import { ItemTrack } from '@/types';
 
 import styles from './styles.module.css';
@@ -7,12 +8,6 @@ import styles from './styles.module.css';
 export interface Props {
   song: ItemTrack;
 }
-
-const mmToMMSS = (miliseconds: number) => {
-  const minutes = Math.floor(miliseconds / 60000);
-  const seconds = String(miliseconds % 60000).slice(0, 2);
-  return `${minutes}:${seconds}`;
-};
 
 export const Track: FC<Props> = ({ song }) => {
   return (
@@ -25,7 +20,7 @@ export const Track: FC<Props> = ({ song }) => {
         </div>
       </div>
       <div data-testid="duration_ms" className={styles.duration}>
-        {mmToMMSS(song.duration_ms)}
+        {milisecondsToMinutes(song.duration_ms)}
       </div>
     </li>
   );
