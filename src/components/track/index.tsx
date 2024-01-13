@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-import { Track as TrackType } from '@/types/spotify';
+import { ItemTrack } from '@/types';
 
 import styles from './styles.module.css';
 
 export interface Props {
-  song: TrackType;
+  song: ItemTrack;
 }
 
 const mmToMMSS = (miliseconds: number) => {

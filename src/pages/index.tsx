@@ -5,7 +5,7 @@ import { SpotifyService } from '@/services/spotify/SpotifyService';
 import { SearchForm } from '@/components/search-form';
 import { AlbumList } from '@/components/album-list';
 import { useAlbums } from '@/hooks/useAlbums';
-import type { AlbumQueryType, Albums } from '@/types/spotify';
+import type { AlbumType, Albums } from '@/types';
 
 import styles from '@/styles/Search.module.css';
 
@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const fetchParams = {
     q: query.q && String(query.q),
     year: Number(query.number),
-    type: query.type ? (query.type as AlbumQueryType) : undefined,
+    type: query.type ? (query.type as AlbumType) : undefined,
     limit: query.limit ? Number(query.limit) : undefined,
   };
 

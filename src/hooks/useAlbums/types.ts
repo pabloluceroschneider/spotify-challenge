@@ -1,4 +1,4 @@
-import { Albums } from '@/types/spotify';
+import { Albums } from '@/types/search';
 
 export enum ReducerActionKind {
   SET_DATA = 'SET_DATA',

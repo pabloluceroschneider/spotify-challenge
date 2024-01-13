@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { SpotifyService } from '@/services/spotify/SpotifyService';
 import { Track } from '@/components/track';
-import { Item } from '@/types/spotify';
+import { Item } from '@/types';
 import styles from '@/styles/Album.module.css';
 
 export default function Home({ album }: any) {

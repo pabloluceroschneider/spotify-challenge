@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Albums } from '@/types/spotify';
+import { Albums } from '@/types';
 
 import styles from './styles.module.css';
 import { FC } from 'react';
