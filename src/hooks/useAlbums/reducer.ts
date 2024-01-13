@@ -1,12 +1,14 @@
 import { ReducerAction, ReducerActionKind, ReducerState } from './types';
 
+type Actions = Record<
+  ReducerActionKind,
+  (payload: Record<string, any>) => ReducerState
+>;
+
 export function albumsReducer(state: ReducerState, action: ReducerAction) {
   const { type, payload } = action;
 
-  const actions: Record<
-    ReducerActionKind,
-    (payload: Record<string, any>) => ReducerState
-  > = {
+  const actions: Actions = {
     [ReducerActionKind.SET_DATA]: ({ data, q, year }) => ({
       ...state,
       data,
