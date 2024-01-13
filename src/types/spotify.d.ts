@@ -25,13 +25,13 @@ export interface Albums {
   href: string;
   items: Item[];
   limit: number;
-  next: string;
+  next: string | null;
   offset: number;
-  previous?: any;
+  previous: string | null;
   total: number;
 }
 
-export interface Item {
+export interface Track {
   artists: Artist[];
   available_markets: string[];
   disc_number: number;
@@ -44,6 +44,18 @@ export interface Item {
   name: string;
   preview_url: string;
   track_number: number;
+  type: string;
+  uri: string;
+}
+
+export interface Item {
+  artists: Artist[];
+  available_markets: string[];
+  external_urls: Externalurls;
+  href: string;
+  id: string;
+  name: string;
+  total_tracks: number;
   type: string;
   uri: string;
 }

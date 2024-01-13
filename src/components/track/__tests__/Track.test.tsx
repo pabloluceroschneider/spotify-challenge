@@ -4,7 +4,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { Track } from '..';
-import { data } from '../data.mock';
+import { data } from '@/mocks/tracks.mock';
 
 describe('Track', () => {
   let props = { ...data };

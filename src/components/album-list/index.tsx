@@ -6,7 +6,7 @@ import { Albums } from '@/types/spotify';
 import styles from './styles.module.css';
 import { FC } from 'react';
 
-interface Props {
+export interface Props {
   data: Albums;
 }
 
