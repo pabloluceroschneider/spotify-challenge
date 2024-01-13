@@ -3,6 +3,7 @@ import { Albums } from '@/types/spotify';
 export enum ReducerActionKind {
   SET_DATA = 'SET_DATA',
   ADD_DATA = 'ADD_DATA',
+  CLEAN_DATA = 'CLEAN_DATA',
 }
 
 export interface ReducerState {

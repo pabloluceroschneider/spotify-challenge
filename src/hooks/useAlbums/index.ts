@@ -19,36 +19,59 @@ export const useAlbums = ({ initialData, q, year }: Params) => {
   });
 
   const handleInput = debounce(async (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
+    try {
+      event.preventDefault();
 
-    const { name, value } = event.target;
-    const { q, year } = store;
+      const { name, value } = event.target;
+      const {
+        q,
+        year,
+        data: { limit },
+      } = store;
 
-    const fetchParams = { q, year, [name]: value };
+      const fetchParams = { q, year, limit, [name]: value };
 
-    const response = await ApiService.fetchAlbums(fetchParams);
+      const response = await ApiService.fetchAlbums(fetchParams);
 
-    return dispatch({
-      type: ReducerActionKind.SET_DATA,
-      payload: { data: response, ...fetchParams },
-    });
+      return dispatch({
+        type: ReducerActionKind.SET_DATA,
+        payload: { data: response, ...fetchParams },
+      });
+    } catch (error) {
+      dispatch({
+        type: ReducerActionKind.CLEAN_DATA,
+        payload: {},
+      });
+    }
   });
 
   const handleOffset = debounce(async () => {
-    const { q, year, data } = store;
+    try {
+      const {
+        q,
+        year,
+        data: { offset, limit },
+      } = store;
 
-    const response = await ApiService.fetchAlbums({
-      q,
-      year,
-      offset: data.offset + data.limit,
-    });
+      const response = await ApiService.fetchAlbums({
+        q,
+        year,
+        offset: offset + limit,
+        limit,
+      });
 
-    return dispatch({
-      type: ReducerActionKind.ADD_DATA,
-      payload: {
-        data: response,
-      },
-    });
+      return dispatch({
+        type: ReducerActionKind.ADD_DATA,
+        payload: {
+          data: response,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: ReducerActionKind.CLEAN_DATA,
+        payload: {},
+      });
+    }
   });
 
   return { ...store, handleInput, handleOffset };

@@ -21,6 +21,14 @@ export function albumsReducer(state: ReducerState, action: ReducerAction) {
         items: [...state.data.items, ...data.items],
       },
     }),
+
+    [ReducerActionKind.CLEAN_DATA]: () => ({
+      ...state,
+      data: {
+        ...state.data,
+        items: [],
+      },
+    }),
   };
 
   return actions[type]?.(payload) || state;
