@@ -17,6 +17,13 @@ export const data: Props = {
             uri: 'spotify:artist:7An4yvF7hDYDolN4m5zKBp',
           },
         ],
+        images: [
+          {
+            height: 640,
+            url: 'https://i.scdn.co/image/ab67616d0000b2733d92b2ad5af9fbc8637425f0',
+            width: 640,
+          },
+        ],
         available_markets: [
           'AR',
           'AU',
