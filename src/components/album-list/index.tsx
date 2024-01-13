@@ -12,17 +12,17 @@ export interface Props {
 
 export const AlbumList: FC<Props> = ({ data }) => {
   return (
-    <section className={`${styles.search}`}>
-      <div className={`${styles.results}`}>
-        {data?.items?.map((album: any) => (
+    <section className={styles.search}>
+      <div className={styles.results}>
+        {data?.items?.map((album) => (
           <Link key={album.id} href={`album/${album.id}`}>
-            <div className={`${styles.album}`} title={album.name}>
-              <div className={`${styles['album-details']}`}>
-                <h3 className={`${styles['album-name']}`}>{album.name}</h3>
+            <div className={styles.album} title={album.name}>
+              <div className={styles['album-details']}>
+                <h3 className={styles['album-name']}>{album.name}</h3>
                 <p>{album.artists[0].name}</p>
               </div>
               <Image
-                className={`${styles['album-img']}`}
+                className={styles['album-img']}
                 src={album.images[0].url}
                 alt={album.name}
                 fill
