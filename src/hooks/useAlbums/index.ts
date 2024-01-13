@@ -79,8 +79,6 @@ export const useAlbums = ({ initialData, q, year }: Params) => {
           data: response,
         },
       });
-
-      setURLParams('limit', String(response.offset + response.limit));
     } catch (error) {
       dispatch({
         type: ReducerActionKind.CLEAN_DATA,
