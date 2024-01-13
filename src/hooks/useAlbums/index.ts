@@ -63,7 +63,7 @@ export const useAlbums = ({ initialData, q, year, onError }: Params) => {
     }
   });
 
-  const handleOffset = debounce(async () => {
+  const handleOffset = async () => {
     try {
       const {
         q,
@@ -92,7 +92,7 @@ export const useAlbums = ({ initialData, q, year, onError }: Params) => {
         payload: {},
       });
     }
-  });
+  };
 
   return { ...store, handleInput, handleOffset };
 };
