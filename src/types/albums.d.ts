@@ -21,7 +21,7 @@ interface Album {
   release_date: string;
   release_date_precision: string;
   total_tracks: number;
-  tracks: Track[];
+  tracks: Track;
   type: AlbumType;
   uri: string;
 }

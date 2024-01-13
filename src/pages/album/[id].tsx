@@ -4,15 +4,19 @@ import Image from 'next/image';
 
 import { SpotifyService } from '@/services/spotify/SpotifyService';
 import { Track } from '@/components/track';
-import { Item } from '@/types';
+import { Album } from '@/types';
 import styles from '@/styles/Album.module.css';
 
-export default function Home({ album }: any) {
+interface Props {
+  album: Album;
+}
+
+export default function Album({ album }: Props) {
   const { name, images, tracks } = album;
   const [image] = images;
   const { items } = tracks;
 
-  const artists = album.artists.map((art: any) => art.name).join(', ');
+  const artists = album.artists.map((art) => art.name).join(', ');
 
   return (
     <>
@@ -31,7 +35,7 @@ export default function Home({ album }: any) {
             layout="responsive"
           />
           <ul className={styles.list}>
-            {items?.map((song: Item) => <Track key={song.id} song={song} />)}
+            {items?.map((song) => <Track key={song.id} song={song} />)}
           </ul>
         </section>
       </main>
