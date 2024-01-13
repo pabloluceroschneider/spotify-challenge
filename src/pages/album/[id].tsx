@@ -6,7 +6,7 @@ import { SpotifyService } from '@/services/spotify/SpotifyService';
 import styles from '@/styles/Album.module.css';
 
 const mmToMMSS = (miliseconds: number) => {
-  const minutes = Math.ceil(miliseconds / 60000);
+  const minutes = Math.floor(miliseconds / 60000);
   const seconds = String(miliseconds % 60000).slice(0, 2);
   return `${minutes}:${seconds}`;
 };
