@@ -1,32 +1,41 @@
 import axios from 'axios';
 import type { FetchAlbumsParams } from '@/types';
 
-const spotifyDomains = {
-  prod: 'https://api.spotify.com',
-};
+class SpotifyServiceSingleton {
+  private static instance: any;
 
-const HttpClient = axios.create({
-  baseURL: spotifyDomains.prod,
-  timeout: 3000,
-  headers: {
-    Authorization: `Bearer ${process.env.SPOTIFY_TOKEN_API}`,
-  },
-});
+  private domains = {
+    prod: 'https://api.spotify.com',
+  };
 
-export class SpotifyService {
+  private SPOTIFY_TOKEN_API = process.env.SPOTIFY_TOKEN_API;
+
+  private restclient = axios.create({
+    baseURL: this.domains.prod,
+    timeout: 3000,
+    headers: {
+      Authorization: `Bearer ${this.SPOTIFY_TOKEN_API}`,
+    },
+  });
+
+  constructor() {
+    if (typeof SpotifyServiceSingleton.instance === 'object') {
+      return SpotifyServiceSingleton.instance;
+    }
+    SpotifyServiceSingleton.instance = this;
+    return this;
+  }
+
   /**
-   * This method fetchs albums by query, year, and type.
-   * The final request is:
-   * GET https://api.spotify.com/v1/search?q={q}%20year%3A{year}&type=album
-   *     - header 'Authorization: Bearer ${process.env.SPOTIFY_TOKEN_API} '
+   * fetch albums by query and year
    */
-  static async fetchAlbums({
+  public async fetchAlbums({
     q,
     year,
     limit = 12,
     offset = 0,
     type = 'album',
-  }: FetchAlbumsParams) {
+  }: FetchAlbumsParams): Promise<any> {
     if (!q) {
       return null;
     }
@@ -43,22 +52,33 @@ export class SpotifyService {
         offset,
       };
 
-      const { data } = await HttpClient.get('/v1/search', {
+      const { data } = await this.restclient('/v1/search', {
         params,
       });
 
       return data;
     } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message); // Logger Service
+      }
       throw error;
     }
   }
 
-  static async fetchAlbumById(id: string) {
+  /**
+   * fetch albums by id
+   */
+  public async fetchAlbumById(id: string) {
     try {
-      const { data } = await HttpClient.get(`/v1/albums/${id}`);
+      const { data } = await this.restclient.get(`/v1/albums/${id}`);
       return data;
     } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message); // Logger Service
+      }
       throw error;
     }
   }
 }
+
+export const SpotifyService = new SpotifyServiceSingleton();
