@@ -35,7 +35,7 @@ class SpotifyServiceSingleton {
     limit = 12,
     offset = 0,
     type = 'album',
-  }: FetchAlbumsParams): Promise<any> {
+  }: FetchAlbumsParams) {
     if (!q) {
       return null;
     }
