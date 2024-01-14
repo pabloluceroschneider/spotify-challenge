@@ -13,7 +13,7 @@ interface Albums {
 
 interface Item {
   album_type?: string;
-  artists: Artist;
+  artists: Artist[];
   available_markets: string[];
   external_urls: {
     spotify: string;

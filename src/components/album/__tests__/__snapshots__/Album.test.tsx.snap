@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Album renders an album 1`] = `
+<body>
+  <div>
+    <a
+      href="album/0mEY1U7SZdIwDWylFm2UC4"
+      id="0mEY1U7SZdIwDWylFm2UC4"
+    >
+      <div
+        class="album"
+        title="Doble Vida (Remastered)"
+      >
+        <div
+          class="album-details"
+        >
+          <h3
+            class="album-name"
+          >
+            Doble Vida (Remastered)
+          </h3>
+          <p>
+            Soda Stereo
+          </p>
+        </div>
+        <img
+          alt="Doble Vida (Remastered)"
+          class="album-img"
+          data-nimg="fill"
+          decoding="async"
+          loading="lazy"
+          sizes="100vw"
+          src="/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=3840&q=75"
+          srcset="/_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=640&q=75 640w, /_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=750&q=75 750w, /_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=828&q=75 828w, /_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=1080&q=75 1080w, /_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=1200&q=75 1200w, /_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=1920&q=75 1920w, /_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=2048&q=75 2048w, /_next/image?url=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab67616d0000b2733d92b2ad5af9fbc8637425f0&w=3840&q=75 3840w"
+          style="position: absolute; height: 100%; width: 100%; left: 0px; top: 0px; right: 0px; bottom: 0px; color: transparent;"
+        />
+      </div>
+    </a>
+  </div>
+</body>
+`;
