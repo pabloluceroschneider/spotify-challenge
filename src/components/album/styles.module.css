@@ -1,23 +1,10 @@
-.search {
-  width: 80%;
-  display: flex;
-}
-
-.results {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 3rem;
-}
-
 .album {
-  min-width: 0;
   position: relative;
   height: 14rem;
 }
 
 .album-img {
-  object-fit: cover;
+  object-fit: scale-down;
 }
 
 .album-details {

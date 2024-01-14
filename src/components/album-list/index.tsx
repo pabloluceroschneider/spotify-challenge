@@ -1,10 +1,9 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import { FC } from 'react';
 
 import { Albums } from '@/types';
+import { Album } from '@/components/album';
 
 import styles from './styles.module.css';
-import { FC } from 'react';
 
 export interface Props {
   data: Albums;
@@ -15,20 +14,13 @@ export const AlbumList: FC<Props> = ({ data }) => {
     <section className={styles.search}>
       <div className={styles.results}>
         {data?.items?.map((album) => (
-          <Link key={album.id} href={`album/${album.id}`}>
-            <div className={styles.album} title={album.name}>
-              <div className={styles['album-details']}>
-                <h3 className={styles['album-name']}>{album.name}</h3>
-                <p>{album.artists[0].name}</p>
-              </div>
-              <Image
-                className={styles['album-img']}
-                src={album.images[0].url}
-                alt={album.name}
-                fill
-              />
-            </div>
-          </Link>
+          <Album
+            key={album.id}
+            id={album.id}
+            name={album.name}
+            artists={album.artists}
+            images={album.images}
+          />
         ))}
       </div>
     </section>
