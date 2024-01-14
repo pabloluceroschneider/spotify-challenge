@@ -58,6 +58,9 @@ class SpotifyServiceSingleton {
 
       return data;
     } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message); // Logger Service
+      }
       throw error;
     }
   }
@@ -70,6 +73,9 @@ class SpotifyServiceSingleton {
       const { data } = await this.restclient.get(`/v1/albums/${id}`);
       return data;
     } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message); // Logger Service
+      }
       throw error;
     }
   }
