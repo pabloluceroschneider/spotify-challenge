@@ -52,4 +52,5 @@ class ApiServiceSingleton {
     }
   }
 }
+
 export const ApiService = new ApiServiceSingleton();
