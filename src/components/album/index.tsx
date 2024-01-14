@@ -20,7 +20,9 @@ export const Album: FC<Props> = ({ id, name, artists, images }) => {
           className={styles['album-img']}
           src={images[0].url}
           alt={name}
-          fill
+          width={images[0].width}
+          height={images[0].height}
+          layout="responsive"
         />
       </div>
     </Link>
