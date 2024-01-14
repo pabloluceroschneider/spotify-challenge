@@ -35,7 +35,16 @@ export default function Album({ album }: Props) {
             layout="responsive"
           />
           <ul className={styles.list}>
-            {items?.map((song) => <Track key={song.id} song={song} />)}
+            {items?.map((song) => (
+              <Track
+                key={song.id}
+                id={song.id}
+                track_number={song.track_number}
+                name={song.name}
+                artists={song.artists}
+                duration_ms={song.duration_ms}
+              />
+            ))}
           </ul>
         </section>
       </main>

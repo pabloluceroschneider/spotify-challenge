@@ -3,14 +3,14 @@
  */
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import { AlbumList } from '..';
+import { Album } from '..';
 import { data } from '@/mocks/album-list.mock';
 
-describe('AlbumList', () => {
+describe('Album', () => {
   let props = { ...data };
 
-  it('renders a song detail', () => {
-    const { baseElement } = render(<AlbumList {...props} />);
+  it('renders an album', () => {
+    const { baseElement } = render(<Album {...props} />);
 
     expect(baseElement).toMatchSnapshot();
   });
